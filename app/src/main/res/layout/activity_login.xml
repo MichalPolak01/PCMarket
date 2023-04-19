@@ -72,7 +72,7 @@
         app:layout_constraintTop_toBottomOf="@id/login" />
 
     <Button
-        android:id="@+id/register"
+        android:id="@+id/signUp"
         android:layout_marginTop="10dp"
         style="@style/button"
         android:text="Zarejestruj się"

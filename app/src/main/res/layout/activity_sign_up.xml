@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignUp"
+    android:background="@drawable/background">
+
+    <TextView
+        android:id="@+id/personalData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Dane osobowe:"
+        android:textSize="30dp"
+        android:textColor="@color/cyan"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_marginTop="15dp"
+        style="@style/input"
+        android:drawableLeft="@drawable/ic_baseline_person_4_24"
+        android:inputType="text"
+        android:hint="Imię"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/personalData" />
+
+    <EditText
+        android:id="@+id/surname"
+        android:layout_marginTop="15dp"
+        style="@style/input"
+        android:drawableLeft="@drawable/ic_baseline_person_4_24"
+        android:inputType="text"
+        android:hint="Nazwisko"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name" />
+
+    <EditText
+        android:id="@+id/phoneNumber"
+        android:layout_marginTop="15dp"
+        style="@style/input"
+        android:drawableLeft="@drawable/ic_baseline_phone_24"
+        android:inputType="phone"
+        android:hint="Numer telefonu"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/surname" />
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_marginTop="15dp"
+        style="@style/input"
+        android:drawableLeft="@drawable/ic_baseline_mail_outline_24"
+        android:inputType="textEmailAddress"
+        android:hint="Adres e-mail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phoneNumber" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_marginTop="15dp"
+        style="@style/input"
+        android:drawableLeft="@drawable/ic_baseline_lock_24"
+        android:inputType="text"
+        android:hint="Hasło"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email" />
+
+    <TextView
+        android:id="@+id/shippingInformation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Dane do wysyłki:"
+        android:textSize="30dp"
+        android:textColor="@color/cyan"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/password" />
+
+    <EditText
+        android:id="@+id/street"
+        android:layout_marginTop="15dp"
+        style="@style/input"
+        android:drawableLeft="@drawable/map_pin_svgrepo_com"
+        android:inputType="text"
+        android:hint="Ulica"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shippingInformation" />
+
+    <EditText
+        android:id="@+id/zipCode"
+        android:layout_marginTop="15dp"
+        style="@style/input"
+        android:drawableLeft="@drawable/map_pin_svgrepo_com"
+        android:inputType="text"
+        android:hint="Kod pocztowy"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/street" />
+
+    <EditText
+        android:id="@+id/city"
+        android:layout_marginTop="15dp"
+        style="@style/input"
+        android:drawableLeft="@drawable/map_pin_svgrepo_com"
+        android:inputType="text"
+        android:hint="Miasto"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/zipCode" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_marginTop="20dp"
+        style="@style/button"
+        android:text="Zarejestruj się"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/city" />
+
+    <ImageButton
+        android:id="@+id/back"
+        android:layout_width="75dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        app:srcCompat="@drawable/ic_baseline_keyboard_backspace_24"
+        android:background="@null"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
