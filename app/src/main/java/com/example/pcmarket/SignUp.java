@@ -62,6 +62,8 @@ public class SignUp extends AppCompatActivity {
                     if(valStreet.isEmpty()) { street.setError("Podaj ulicę!"); }
                     if(valZipCode.isEmpty()) { zipCode.setError("Podaj kod pocztowy!"); }
                     if(valCity.isEmpty()) { city.setError("Podaj miasto!"); }
+
+                    Toast.makeText(getApplicationContext(), "Uzupełnij wszystkie pola!", Toast.LENGTH_SHORT).show();
                 } else {
                     String idAdresu = "";
 
