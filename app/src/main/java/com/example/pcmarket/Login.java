@@ -53,6 +53,7 @@ public class Login extends AppCompatActivity {
                         }
                         if(valUserId != "") {
                             Toast.makeText(getApplicationContext(), "Witaj "+valImie, Toast.LENGTH_SHORT).show();
+                            connect.close();
                             Intent intent = new Intent(Login.this, MainActivity.class);
                             intent.putExtra("userId", valUserId);
                             startActivity(intent);
@@ -65,7 +66,6 @@ public class Login extends AppCompatActivity {
                 }
             }
         });
-
 
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
