@@ -13,7 +13,7 @@ import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
-    private final RecyclerViewInterface recyclerViewInterface;
+    private RecyclerViewInterface recyclerViewInterface;
     Context context;
     List<Item> items;
 
@@ -36,6 +36,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         holder.productMark.setText(items.get(position).getMarka());
         holder.productPrice.setText(items.get(position).getCena());
 
+        holder.itemView.setOnClickListener(view -> {
+            recyclerViewInterface.onItemClick(items.get(position));
+        });
     }
 
     @Override

@@ -22,19 +22,5 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
         productName = itemView.findViewById(R.id.name);
         productMark = itemView.findViewById(R.id.mark);
         productPrice = itemView.findViewById(R.id.price);
-
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(recyclerViewInterface != null) {
-                    int position = getAdapterPosition();
-
-                    if(position != RecyclerView.NO_POSITION) {
-                        recyclerViewInterface.onItemClick(position);
-                    }
-                }
-            }
-        });
-
     }
 }

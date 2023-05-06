@@ -1,5 +1,7 @@
 package com.example.pcmarket;
 
+import java.util.Date;
+
 public class Item {
     String id_produktu;
     String nazwa;
@@ -8,8 +10,26 @@ public class Item {
     String zdjecie;
     String ilosc;
     String opis;
+    String kategoria;
+    Date data_dodania;
 
-    public Item(String id_produktu, String nazwa, String marka, String cena, String zdjecie, String ilosc, String opis) {
+    public String getKategoria() {
+        return kategoria;
+    }
+
+    public void setKategoria(String kategoria) {
+        this.kategoria = kategoria;
+    }
+
+    public Date getData_dodania() {
+        return data_dodania;
+    }
+
+    public void setData_dodania(Date data_dodania) {
+        this.data_dodania = data_dodania;
+    }
+
+    public Item(String id_produktu, String nazwa, String marka, String cena, String zdjecie, String ilosc, String opis, String string, String resultString) {
         this.id_produktu = id_produktu;
         this.nazwa = nazwa;
         this.marka = marka;

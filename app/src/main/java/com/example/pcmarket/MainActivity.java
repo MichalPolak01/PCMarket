@@ -1,18 +1,18 @@
 package com.example.pcmarket;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements RecyclerViewInterface{
+public class MainActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         try {
             while (result.next()) {
                 items.add(new Item(result.getString(1), result.getString(2), result.getString(3),
-                        result.getString(4), result.getString(5), result.getString(6), result.getString(7)));
+                        result.getString(4), result.getString(5), result.getString(6), result.getString(7)
+                        , result.getString(8), result.getString(9)));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -46,13 +47,13 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewInter
         connect.close();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new MyAdapter(getApplicationContext(), items, this));
-    }
-
-
-    @Override
-    public void onItemClick(int position) {
-        Intent intent = new Intent(MainActivity.this, ProductDetails.class);
-        startActivity(intent);
+        recyclerView.setAdapter(new MyAdapter(getApplicationContext(), items, new RecyclerViewInterface() {
+            @Override
+            public void onItemClick(Item details) {
+                Intent intent = new Intent(MainActivity.this, ProductDetails.class);
+                intent.putExtra("productID", details.getId_produktu());
+                startActivity(intent);
+            }
+        }));
     }
 }
