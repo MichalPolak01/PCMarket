@@ -47,7 +47,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         holder.addToBasket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context.getApplicationContext(), "Dodano!"+ position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context.getApplicationContext(), "Dodano! "+ position, Toast.LENGTH_SHORT).show();
             }
         });
     }

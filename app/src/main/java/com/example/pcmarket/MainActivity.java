@@ -22,14 +22,25 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+    // do zrobienia z pliku
         Bundle extras = getIntent().getExtras();
         String where = extras.getString("query");
+        String userID = extras.getString("userId");
+
 
         if(where == null) {
             where = "";
         }
-
         showProducts(where);
+
+        ImageButton accountSettings = findViewById(R.id.account);
+        accountSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AccountSettings.class);
+                startActivity(intent);
+            }
+        });
 
         ImageButton filtration = findViewById(R.id.filter);
         filtration.setOnClickListener(new View.OnClickListener() {
@@ -39,7 +50,6 @@ public class MainActivity extends AppCompatActivity{
                 startActivity(intent);
             }
         });
-
     }
 
     private void showProducts(String where) {
@@ -59,7 +69,7 @@ public class MainActivity extends AppCompatActivity{
             while (result.next()) {
                 items.add(new Item(result.getString(1), result.getString(2), result.getString(3),
                         result.getString(4), result.getString(5), result.getString(6), result.getString(7)
-                        , result.getString(8), result.getString(9)));
+                        , result.getString(8), result.getDate(9)));
             }
         } catch (Exception e) {
             e.printStackTrace();

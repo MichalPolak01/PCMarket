@@ -71,7 +71,7 @@ public class ProductDetails extends AppCompatActivity {
             while (result.next()) {
                 product.add(new Item(result.getString(1), result.getString(2), result.getString(3),
                         result.getString(4), result.getString(5), result.getString(6), result.getString(7)
-                        , result.getString(8), result.getString(9)));
+                        , result.getString(8), result.getDate(9)));
             }
         } catch (Exception e) {
             e.printStackTrace();

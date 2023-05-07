@@ -64,4 +64,14 @@ public class Connect {
             System.out.println("Błąd przy dodawaniu danych: " + e);
         }
     }
+
+    public void update(String query, Connection connection) {
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(query);
+            System.out.println("Poprawnie zmieniono dane!");
+        } catch (SQLException e) {
+            System.out.println("Błąd przy zmianie danych: " + e);
+        }
+    }
 }

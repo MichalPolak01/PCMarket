@@ -13,6 +13,18 @@ public class Item {
     String kategoria;
     Date data_dodania;
 
+    public Item(String id_produktu, String nazwa, String marka, String cena, String zdjecie, String ilosc, String opis, String kategoria, Date data_dodania) {
+        this.id_produktu = id_produktu;
+        this.nazwa = nazwa;
+        this.marka = marka;
+        this.cena = cena;
+        this.zdjecie = zdjecie;
+        this.ilosc = ilosc;
+        this.opis = opis;
+        this.kategoria = kategoria;
+        this.data_dodania = data_dodania;
+    }
+
     public String getKategoria() {
         return kategoria;
     }
@@ -29,15 +41,7 @@ public class Item {
         this.data_dodania = data_dodania;
     }
 
-    public Item(String id_produktu, String nazwa, String marka, String cena, String zdjecie, String ilosc, String opis, String string, String resultString) {
-        this.id_produktu = id_produktu;
-        this.nazwa = nazwa;
-        this.marka = marka;
-        this.cena = cena;
-        this.zdjecie = zdjecie;
-        this.ilosc = ilosc;
-        this.opis = opis;
-    }
+
 
     public String getId_produktu() {
         return id_produktu;
