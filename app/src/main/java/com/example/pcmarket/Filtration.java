@@ -14,7 +14,12 @@ import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 public class Filtration extends AppCompatActivity {
+    private static final String FILE_QUERY = "query.txt";
 
     RadioGroup radioGroup;
     RadioButton radioButton;
@@ -59,10 +64,11 @@ public class Filtration extends AppCompatActivity {
                 }
 
                 String query = where+""+orderBy;
+                saveQuery(query);
 
 
                 Intent intent = new Intent(Filtration.this, MainActivity.class);
-                intent.putExtra("query", query);
+//                intent.putExtra("query", query);
                 startActivity(intent);
             }
         });
@@ -119,5 +125,27 @@ public class Filtration extends AppCompatActivity {
                 break;
         }
         return orderBy;
+    }
+
+    private void saveQuery(String query) {
+        FileOutputStream fileOutputStream = null;
+
+        try {
+            fileOutputStream = openFileOutput(FILE_QUERY, MODE_PRIVATE);
+            fileOutputStream.write(query.getBytes());
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(fileOutputStream != null) {
+                try {
+                    fileOutputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

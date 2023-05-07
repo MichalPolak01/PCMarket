@@ -10,11 +10,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.ResultSet;
@@ -39,6 +39,7 @@ public class AccountSettings extends AppCompatActivity {
                 updatePersonalData();
                 String addresID = loadDataPerosnal();
                 loadDataAddress(addresID);
+                Toast.makeText(getApplicationContext(), "Dane osobowe zostały zmienione!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -49,6 +50,7 @@ public class AccountSettings extends AppCompatActivity {
                 updateAddressData(addresID);
                 String addresID = loadDataPerosnal();
                 loadDataAddress(addresID);
+                Toast.makeText(getApplicationContext(), "Dane adresowe zostały zmienione!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -204,7 +206,6 @@ public class AccountSettings extends AppCompatActivity {
             fileInputStream = openFileInput(FILE_NAME);
             InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            StringBuilder stringBuilder = new StringBuilder();
             userID = bufferedReader.readLine();
 
         } catch (FileNotFoundException e) {

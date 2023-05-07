@@ -6,7 +6,6 @@ import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +19,7 @@ import java.util.List;
 
 public class Login extends AppCompatActivity {
     private static final String FILE_NAME = "userID.txt";
+    private static final String FILE_QUERY = "query.txt";
 
     EditText email;
     EditText password;
@@ -45,6 +45,7 @@ public class Login extends AppCompatActivity {
                 startActivity(switchToSignUp);
             }
         });
+        saveQuery();
     }
 
     private void userValidation() {
@@ -91,7 +92,7 @@ public class Login extends AppCompatActivity {
                 saveUserID(users.get(0).getId_osoby());
                 Toast.makeText(getApplicationContext(), "Witaj "+users.get(0).getImie(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Login.this, MainActivity.class);
-                intent.putExtra("userId", users.get(0).getId_osoby());
+//                intent.putExtra("userId", users.get(0).getId_osoby());
                 startActivity(intent);
             } else {
                 Toast.makeText(getApplicationContext(), "Niepoprawne dane!", Toast.LENGTH_SHORT).show();
@@ -107,6 +108,28 @@ public class Login extends AppCompatActivity {
         try {
             fileOutputStream = openFileOutput(FILE_NAME, MODE_PRIVATE);
             fileOutputStream.write(userID.getBytes());
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(fileOutputStream != null) {
+                try {
+                    fileOutputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void saveQuery() {
+        FileOutputStream fileOutputStream = null;
+
+        try {
+            fileOutputStream = openFileOutput(FILE_QUERY, MODE_PRIVATE);
+            fileOutputStream.write("".getBytes());
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

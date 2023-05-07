@@ -11,11 +11,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity{
+    private static final String FILE_QUERY = "query.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,15 +29,17 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
     // do zrobienia z pliku
-        Bundle extras = getIntent().getExtras();
-        String where = extras.getString("query");
-        String userID = extras.getString("userId");
+//        Bundle extras = getIntent().getExtras();
+//        String where = extras.getString("query");
+//        String userID = extras.getString("userId"); // to już nie działa jest tylo po brak błedu
 
 
-        if(where == null) {
-            where = "";
-        }
-        showProducts(where);
+//        if(where == null) {
+//            where = "";
+//        }
+//        showProducts(where);
+
+        showProducts();
 
         ImageButton accountSettings = findViewById(R.id.account);
         accountSettings.setOnClickListener(new View.OnClickListener() {
@@ -50,14 +58,29 @@ public class MainActivity extends AppCompatActivity{
                 startActivity(intent);
             }
         });
+
+        ImageButton shopingCart = findViewById(R.id.shoppingCart);
+        shopingCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ShoppingCart.class);
+                startActivity(intent);
+            }
+        });
     }
 
-    private void showProducts(String where) {
+    private void showProducts() {
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
 
         StrictMode.ThreadPolicy threadPolicy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(threadPolicy);
         Connect connect = new Connect();
+
+        String where = loadSavedUserID();
+
+        if(where == null) {
+            where = "";
+        }
 
         String query = "SELECT * FROM psm_computer_store.produkty "+where;
 
@@ -86,5 +109,31 @@ public class MainActivity extends AppCompatActivity{
                 startActivity(intent);
             }
         }));
+    }
+
+    private String loadSavedUserID() {
+        FileInputStream fileInputStream = null;
+
+        String userID = "";
+        try {
+            fileInputStream = openFileInput(FILE_QUERY);
+            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            userID = bufferedReader.readLine();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(fileInputStream != null) {
+                try {
+                    fileInputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return userID;
+        }
     }
 }
