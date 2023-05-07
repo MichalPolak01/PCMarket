@@ -66,6 +66,7 @@
             android:layout_marginTop="15dp"/>
 
         <ImageButton
+            android:id="@+id/shoppingBasket"
             android:layout_width="75dp"
             android:layout_height="75dp"
             app:layout_constraintBottom_toBottomOf="parent"

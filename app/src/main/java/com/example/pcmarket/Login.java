@@ -1,8 +1,5 @@
 package com.example.pcmarket;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -11,7 +8,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.sql.Connection;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.sql.ResultSet;
 
 public class Login extends AppCompatActivity {

@@ -1,8 +1,11 @@
 package com.example.pcmarket;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +17,7 @@ import java.util.List;
 public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     private RecyclerViewInterface recyclerViewInterface;
+
     Context context;
     List<Item> items;
 
@@ -30,7 +34,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Picasso.get().load(items.get(position).getZdjecie()).into(holder.productImage);
         holder.productName.setText(items.get(position).getNazwa());
         holder.productMark.setText(items.get(position).getMarka());
@@ -38,6 +42,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
         holder.itemView.setOnClickListener(view -> {
             recyclerViewInterface.onItemClick(items.get(position));
+        });
+
+        holder.addToBasket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context.getApplicationContext(), "Dodano!"+ position, Toast.LENGTH_SHORT).show();
+            }
         });
     }
 

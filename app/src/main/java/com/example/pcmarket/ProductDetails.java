@@ -18,8 +18,6 @@ import java.util.List;
 
 public class ProductDetails extends AppCompatActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +55,6 @@ public class ProductDetails extends AppCompatActivity {
                 // Do zrobienia!
             }
         });
-
     }
 
     private List<Item> showProduct(String productID) {

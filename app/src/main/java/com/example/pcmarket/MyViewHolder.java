@@ -1,6 +1,7 @@
 package com.example.pcmarket;
 
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
     TextView productName;
     TextView productMark;
     TextView productPrice;
+    ImageButton addToBasket;
 
 
     public MyViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
@@ -22,5 +24,6 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
         productName = itemView.findViewById(R.id.name);
         productMark = itemView.findViewById(R.id.mark);
         productPrice = itemView.findViewById(R.id.price);
+        addToBasket = itemView.findViewById(R.id.shoppingBasket);
     }
 }

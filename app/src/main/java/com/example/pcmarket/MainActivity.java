@@ -3,6 +3,9 @@ package com.example.pcmarket;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,17 +22,35 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        showProducts();
+        Bundle extras = getIntent().getExtras();
+        String where = extras.getString("query");
+
+        if(where == null) {
+            where = "";
+        }
+
+        showProducts(where);
+
+        ImageButton filtration = findViewById(R.id.filter);
+        filtration.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Filtration.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
-    private void showProducts() {
+    private void showProducts(String where) {
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
 
         StrictMode.ThreadPolicy threadPolicy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(threadPolicy);
         Connect connect = new Connect();
 
-        String query = "SELECT * FROM psm_computer_store.produkty";
+        String query = "SELECT * FROM psm_computer_store.produkty "+where;
+
         ResultSet result = connect.select(query, connect.getConnection());
 
         List<Item> items = new ArrayList<>();
