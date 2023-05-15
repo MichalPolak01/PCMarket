@@ -68,12 +68,12 @@
         <Spinner
             android:layout_width="320dp"
             android:layout_height="50dp"
+            android:id="@+id/selector"
             android:layout_marginTop="15dp"
+            android:popupBackground="#CC3795BD"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/selectCategory"
-            android:id="@+id/selector"
-            android:background="@color/teal" />
+            app:layout_constraintTop_toBottomOf="@id/selectCategory" />
 
         <TextView
             android:id="@+id/selectSort"
@@ -98,28 +98,32 @@
 
                 <RadioButton
                     android:id="@+id/radio1"
+                    android:textColor="@color/teal"
+                    android:text="Po cenie malejąco"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                        android:text="Po cenie malejąco" />
+                    android:layout_height="wrap_content" />
 
                 <RadioButton
                     android:id="@+id/radio2"
+                    android:textColor="@color/teal"
+                    android:text="Po cenie rosnąco"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Po cenie rosnąco" />
+                    android:layout_height="wrap_content" />
 
                 <RadioButton
                     android:id="@+id/radio3"
+                    android:textColor="@color/teal"
+                    android:text="Po dacie dodania - od najnowszych"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Po dacie dodania - od najnowszych"
                     android:checked="true" />
 
                 <RadioButton
                     android:id="@+id/radio4"
+                    android:textColor="@color/teal"
+                    android:text="Po dacie dodania - od najstarszych"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Po dacie dodania - od najstarszych" />
+                    android:layout_height="wrap_content" />
 
         </RadioGroup>
 

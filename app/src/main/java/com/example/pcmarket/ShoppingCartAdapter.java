@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -58,11 +59,16 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartViewHo
         holder.addProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                amount += 1;
-                updateShoppingList(shoppingCarts.get(position).getId_produktu_w_koszyku(), amount.toString());
-                Intent intent = new Intent(context, ShoppingCart.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+                if (Integer.valueOf(product.get(0).getIlosc()) >= amount + 1) {
+                    amount += 1;
+                    updateShoppingList(shoppingCarts.get(position).getId_produktu_w_koszyku(), amount.toString());
+                    Toast.makeText(context.getApplicationContext(), "Dodano do koszyka "+ product.get(0).getNazwa(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context, ShoppingCart.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                } else {
+                    Toast.makeText(context.getApplicationContext(), "Dodawanie do koszyka nie powiodło się", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -70,7 +76,13 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartViewHo
             @Override
             public void onClick(View v) {
                 amount -= 1;
-                updateShoppingList(shoppingCarts.get(position).getId_produktu_w_koszyku(), amount.toString());
+                if (amount == 0) {
+                    deleteFromShoppingList(shoppingCarts.get(position).getId_produktu_w_koszyku());
+                    Toast.makeText(context.getApplicationContext(), "Usunięto z koszyka "+ product.get(0).getNazwa(), Toast.LENGTH_SHORT).show();
+                } else {
+                    updateShoppingList(shoppingCarts.get(position).getId_produktu_w_koszyku(), amount.toString());
+                    Toast.makeText(context.getApplicationContext(), "Usunięto jedną sztukę "+ product.get(0).getNazwa(), Toast.LENGTH_SHORT).show();
+                }
                 Intent intent = new Intent(context, ShoppingCart.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
@@ -111,7 +123,15 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartViewHo
     private void updateShoppingList(String productID, String amount) {
         String userID = loadSavedUserID();
 
-        String query = "UPDATE psm_computer_store.lista_zakupow SET ilosc='"+productID+"' WHERE id_produktu_w_koszyku="+amount ;
+        String query = "UPDATE psm_computer_store.lista_zakupow SET ilosc='"+amount+"' WHERE id_produktu_w_koszyku="+productID+" AND id_osoby="+userID;
+
+        update(query);
+    }
+
+    private void deleteFromShoppingList(String productID) {
+        String userID = loadSavedUserID();
+
+        String query = "DELETE FROM psm_computer_store.lista_zakupow WHERE id_produktu_w_koszyku="+productID+" AND id_osoby="+userID;
 
         update(query);
     }

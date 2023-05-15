@@ -25,7 +25,6 @@ public class Filtration extends AppCompatActivity {
     RadioButton radioButton;
     Button applyFilters;
     EditText name;
-
     String checkedCategory="";
 
     @Override
@@ -68,7 +67,6 @@ public class Filtration extends AppCompatActivity {
 
 
                 Intent intent = new Intent(Filtration.this, MainActivity.class);
-//                intent.putExtra("query", query);
                 startActivity(intent);
             }
         });
@@ -91,8 +89,8 @@ public class Filtration extends AppCompatActivity {
         Spinner spinner;
         spinner = findViewById(R.id.selector);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Filtration.this, android.R.layout.simple_spinner_item, category);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> adapter = new ArrayAdapter(Filtration.this, R.layout.spinner_my_selected_item, category);
+        adapter.setDropDownViewResource(R.layout.spinner_my_dropdown_item);
         spinner.setAdapter(adapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

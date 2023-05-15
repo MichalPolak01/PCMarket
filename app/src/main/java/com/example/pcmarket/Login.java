@@ -88,17 +88,24 @@ public class Login extends AppCompatActivity {
 
             connect.close();
 
+            String role = users.get(0).getRola();
+
             if(users != null) {
                 saveUserID(users.get(0).getId_osoby());
                 Toast.makeText(getApplicationContext(), "Witaj "+users.get(0).getImie(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(Login.this, MainActivity.class);
-//                intent.putExtra("userId", users.get(0).getId_osoby());
+
+                Intent intent;
+                if (role.equals("pracownik")){
+                    intent = new Intent(Login.this, MainActivityEmployee.class);
+                } else {
+                   intent = new Intent(Login.this, MainActivity.class);
+                }
                 startActivity(intent);
             } else {
                 Toast.makeText(getApplicationContext(), "Niepoprawne dane!", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Coś poszło nie tak jak powinno!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Niepoprawne dane!", Toast.LENGTH_SHORT).show();
         }
     }
 

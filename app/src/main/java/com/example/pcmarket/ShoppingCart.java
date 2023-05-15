@@ -10,11 +10,17 @@ import android.os.StrictMode;
 import android.view.View;
 import android.widget.ImageButton;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingCart extends AppCompatActivity {
+    private static final String FILE_NAME = "userID.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +50,14 @@ public class ShoppingCart extends AppCompatActivity {
 
 
     private void showProducts() {
+        String userID = loadSavedUserID();
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
 
         StrictMode.ThreadPolicy threadPolicy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(threadPolicy);
         Connect connect = new Connect();
 
-        String query = "SELECT * FROM psm_computer_store.lista_zakupow";
+        String query = "SELECT * FROM psm_computer_store.lista_zakupow WHERE id_osoby="+userID;
 
         ResultSet result = connect.select(query, connect.getConnection());
 
@@ -69,5 +76,31 @@ public class ShoppingCart extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new ShoppingCartAdapter(getApplicationContext(), items));
+    }
+
+    private String loadSavedUserID() {
+        FileInputStream fileInputStream = null;
+
+        String userID = "";
+        try {
+            fileInputStream = openFileInput(FILE_NAME);
+            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            userID = bufferedReader.readLine();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(fileInputStream != null) {
+                try {
+                    fileInputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return userID;
+        }
     }
 }
