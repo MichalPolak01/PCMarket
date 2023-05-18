@@ -3,13 +3,11 @@ package com.example.pcmarket;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
 import android.widget.ImageButton;
-
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -47,7 +45,6 @@ public class ShoppingCart extends AppCompatActivity {
             }
         });
     }
-
 
     private void showProducts() {
         String userID = loadSavedUserID();

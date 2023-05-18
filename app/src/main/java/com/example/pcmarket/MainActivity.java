@@ -28,17 +28,6 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-    // do zrobienia z pliku
-//        Bundle extras = getIntent().getExtras();
-//        String where = extras.getString("query");
-//        String userID = extras.getString("userId"); // to już nie działa jest tylo po brak błedu
-
-
-//        if(where == null) {
-//            where = "";
-//        }
-//        showProducts(where);
-
         showProducts();
 
         ImageButton accountSettings = findViewById(R.id.account);
@@ -76,7 +65,7 @@ public class MainActivity extends AppCompatActivity{
         StrictMode.setThreadPolicy(threadPolicy);
         Connect connect = new Connect();
 
-        String where = loadSavedUserID();
+        String where = loadSavedQuery();
 
         if(where == null) {
             where = "";
@@ -111,15 +100,15 @@ public class MainActivity extends AppCompatActivity{
         }));
     }
 
-    private String loadSavedUserID() {
+    private String loadSavedQuery() {
         FileInputStream fileInputStream = null;
 
-        String userID = "";
+        String query = "";
         try {
             fileInputStream = openFileInput(FILE_QUERY);
             InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            userID = bufferedReader.readLine();
+            query = bufferedReader.readLine();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -133,7 +122,7 @@ public class MainActivity extends AppCompatActivity{
                     e.printStackTrace();
                 }
             }
-            return userID;
+            return query;
         }
     }
 }

@@ -1,16 +1,13 @@
 package com.example.pcmarket;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -58,7 +55,6 @@ public class MainActivityEmployee extends AppCompatActivity {
         });
 
         ImageButton AddProduct = findViewById(R.id.add);
-
         AddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +71,7 @@ public class MainActivityEmployee extends AppCompatActivity {
         StrictMode.setThreadPolicy(threadPolicy);
         Connect connect = new Connect();
 
-        String where = loadSavedUserID();
+        String where = loadSavedQuery();
 
         if(where == null) {
             where = "";
@@ -84,7 +80,6 @@ public class MainActivityEmployee extends AppCompatActivity {
         String query = "SELECT * FROM psm_computer_store.produkty "+where;
 
         ResultSet result = connect.select(query, connect.getConnection());
-
         List<Item> items = new ArrayList<>();
 
         try {
@@ -100,25 +95,18 @@ public class MainActivityEmployee extends AppCompatActivity {
         connect.close();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new MyAdapter(getApplicationContext(), items, new RecyclerViewInterface() {
-            @Override
-            public void onItemClick(Item details) {
-                Intent intent = new Intent(MainActivityEmployee.this, ProductDetails.class);
-                intent.putExtra("productID", details.getId_produktu());
-                startActivity(intent);
-            }
-        }));
+        recyclerView.setAdapter(new MainEmployeeAdapter(getApplicationContext(), items));
     }
 
-    private String loadSavedUserID() {
+    private String loadSavedQuery() {
         FileInputStream fileInputStream = null;
 
-        String userID = "";
+        String query = "";
         try {
             fileInputStream = openFileInput(FILE_QUERY);
             InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            userID = bufferedReader.readLine();
+            query = bufferedReader.readLine();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -132,7 +120,7 @@ public class MainActivityEmployee extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-            return userID;
+            return query;
         }
     }
 }

@@ -17,6 +17,7 @@
             android:weightSum="4"
             android:orientation="horizontal"
             android:gravity="center_horizontal" >
+
         <ImageButton
             android:id="@+id/admin"
             android:layout_width="wrap_content"
@@ -35,22 +36,22 @@
             app:srcCompat="@drawable/ic_baseline_filter_alt_24" />
 
         <ImageButton
-            android:id="@+id/orders"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginRight="5dp"
-            android:background="@null"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/ic_baseline_shopping_cart_checkout_24" />
-
-        <ImageButton
             android:id="@+id/add"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="5dp"
             android:background="@null"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_baseline_add_checkout_24_foreground" />
+            app:srcCompat="@drawable/ic_baseline_post_add_24" />
+
+        <ImageButton
+            android:id="@+id/orders"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:background="@null"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_baseline_menu_book_24" />
 
     </LinearLayout>
 
@@ -59,7 +60,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/recyclerview" />
-
-
 
 </RelativeLayout>
