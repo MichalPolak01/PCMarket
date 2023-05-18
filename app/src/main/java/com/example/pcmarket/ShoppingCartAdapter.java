@@ -7,14 +7,10 @@ import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.squareup.picasso.Picasso;
-
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -41,14 +37,12 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartViewHo
         return new ShoppingCartViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view_shopping_cart, parent, false));
     }
 
-    Integer amount;
     @Override
     public void onBindViewHolder(@NonNull ShoppingCartViewHolder holder, @SuppressLint("RecyclerView") int position) {
         List<Item> product = getProduct(shoppingCarts.get(position).getId_produktu());
 
         Float price = Float.valueOf(product.get(0).getCena());
-        amount = Integer.valueOf(shoppingCarts.get(position).getIlosc());
-
+        Integer amount = Integer.valueOf(shoppingCarts.get(position).getIlosc());
         Float totalProductPrice = price * Float.valueOf(amount);
 
         holder.productName.setText(product.get(0).getNazwa());
@@ -59,6 +53,7 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartViewHo
         holder.addProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Integer amount = Integer.valueOf(shoppingCarts.get(position).getIlosc());
                 if (Integer.valueOf(product.get(0).getIlosc()) >= amount + 1) {
                     amount += 1;
                     updateShoppingList(shoppingCarts.get(position).getId_produktu_w_koszyku(), amount.toString());
@@ -75,6 +70,7 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartViewHo
         holder.subProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Integer amount = Integer.valueOf(shoppingCarts.get(position).getIlosc());
                 amount -= 1;
                 if (amount == 0) {
                     deleteFromShoppingList(shoppingCarts.get(position).getId_produktu_w_koszyku());

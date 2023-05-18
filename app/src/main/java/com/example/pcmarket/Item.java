@@ -41,8 +41,6 @@ public class Item {
         this.data_dodania = data_dodania;
     }
 
-
-
     public String getId_produktu() {
         return id_produktu;
     }

@@ -51,20 +51,22 @@ public class Filtration extends AppCompatActivity {
                 String whereName = "";
                 String whereCategory = "";
                 String where = "";
-                if(nameValue.length() > 0 || checkedCategory.length() > 0) {
+                if(nameValue.length() > 0) {
+                    whereName = " nazwa like \'%"+nameValue+"%\'";
 
-                    if(nameValue.length() > 0) {
-                        whereName = " nazwa like \'%"+nameValue+"%\'";
+                    if(checkedCategory.length() > 0) {
+                        whereCategory = " AND kategoria like \'"+checkedCategory+"\'";
                     }
+                    where = " WHERE"+ whereName+""+whereCategory;
+                } else {
                     if(checkedCategory.length() > 0) {
                         whereCategory = " kategoria like \'"+checkedCategory+"\'";
                     }
-                    where = " WHERE"+ whereName+""+whereCategory;
+                    where = " WHERE "+whereCategory;
                 }
 
                 String query = where+""+orderBy;
                 saveQuery(query);
-
 
                 Intent intent = new Intent(Filtration.this, MainActivity.class);
                 startActivity(intent);

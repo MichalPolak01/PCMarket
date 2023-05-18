@@ -1,7 +1,6 @@
 package com.example.pcmarket;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -51,20 +49,22 @@ public class FiltrationForEmployee extends AppCompatActivity {
                 String whereName = "";
                 String whereCategory = "";
                 String where = "";
-                if(nameValue.length() > 0 || checkedCategory.length() > 0) {
+                if(nameValue.length() > 0) {
+                    whereName = " nazwa like '%"+nameValue+"%'";
 
-                    if(nameValue.length() > 0) {
-                        whereName = " nazwa like \'%"+nameValue+"%\'";
-                    }
                     if(checkedCategory.length() > 0) {
-                        whereCategory = " kategoria like \'"+checkedCategory+"\'";
+                        whereCategory = " AND kategoria like '"+checkedCategory+"'";
                     }
-                    where = " WHERE"+ whereName+""+whereCategory;
+                    where = " WHERE"+ whereName+""+whereCategory+" AND"+whereAvailable;
+                } else if (checkedCategory.length() > 0){
+                    whereCategory = " kategoria like '"+checkedCategory+"'";
+
+                    where = " WHERE "+whereCategory+" AND"+ whereAvailable;
+                } else {
+                    where = " WHERE"+whereAvailable;
                 }
 
-                String query = where+""+whereAvailable;
-                saveQuery(query);
-
+                saveQuery(where);
 
                 Intent intent = new Intent(FiltrationForEmployee.this, MainActivityEmployee.class);
                 startActivity(intent);
@@ -107,19 +107,19 @@ public class FiltrationForEmployee extends AppCompatActivity {
     }
 
     private String checkedOption(String option) {
-        String orderBy ="";
+        String where =" ";
         switch (option) {
             case "Pokaż wszystkie produkty":
-                orderBy = " ";
+                where = "  ilosc >=0 ";
                 break;
             case "Pokaż tylko dostępne produkty":
-                orderBy = " AND ilosc > 1 ";
+                where = " ilosc > 1 ";
                 break;
             case "Pokaż tylko niedostępne produkty":
-                orderBy = " AND ilosc = 0 ";
+                where = " ilosc = 0 ";
                 break;
         }
-        return orderBy;
+        return where;
     }
 
     private void saveQuery(String query) {
