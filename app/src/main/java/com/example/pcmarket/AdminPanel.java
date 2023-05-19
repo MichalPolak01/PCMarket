@@ -84,8 +84,9 @@ public class AdminPanel extends AppCompatActivity {
 
                 } else {
                     String query = "UPDATE psm_computer_store.osoby SET rola = 'pracownik' WHERE email like '"+valEmail+"';";
-
                     update(query);
+
+                    Toast.makeText(getApplicationContext(), "Nowy pracownik został pomyślnie dodany!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

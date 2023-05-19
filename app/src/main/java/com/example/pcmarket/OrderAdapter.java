@@ -1,5 +1,6 @@
 package com.example.pcmarket;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.StrictMode;
@@ -33,10 +34,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
-        holder.orderPrice.setText("Razem:  "+ orders.get(0).getKwota() +" zł");
+    public void onBindViewHolder(@NonNull OrderViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        holder.orderPrice.setText("Razem:  "+ orders.get(position).getKwota() +" zł");
 
-        List<OrderItem> orderItems = getOrderProduct(orders.get(0).getId_zamowienia());
+        List<OrderItem> orderItems = getOrderProduct(orders.get(position).getId_zamowienia());
 
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
         holder.recyclerView.setAdapter(new OrderProductAdapter(context.getApplicationContext(), orderItems));
@@ -44,7 +45,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderViewHolder> {
         holder.orderSent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sentOrder(orders.get(0).getId_zamowienia());
+                sentOrder(orders.get(position).getId_zamowienia());
                 Intent intent = new Intent(context, CheckOrders.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);

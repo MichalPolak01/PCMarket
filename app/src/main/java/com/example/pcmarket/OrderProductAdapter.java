@@ -36,7 +36,7 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductViewHo
         Picasso.get().load(product.get(0).getZdjecie()).into(holder.orderItemImage);
         holder.orderItemName.setText(product.get(0).getNazwa());
         holder.orderItemPrice.setText(product.get(0).getCena());
-        holder.orderItemAmount.setText(orderItems.get(0).getIlosc());
+        holder.orderItemAmount.setText(orderItems.get(position).getIlosc());
     }
 
     @Override
