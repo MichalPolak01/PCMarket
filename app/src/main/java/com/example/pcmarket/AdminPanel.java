@@ -1,15 +1,16 @@
 package com.example.pcmarket;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdminPanel extends AppCompatActivity {
+    private static final String FILE_NAME = "userID.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +31,7 @@ public class AdminPanel extends AppCompatActivity {
         String addressID = loadDataPerosnal();
         loadDataAddress(addressID);
 
-        TextView changePersonalData = findViewById(R.id.changePersonalData);
+        Button changePersonalData = findViewById(R.id.changePersonalData);
         changePersonalData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,7 +42,7 @@ public class AdminPanel extends AppCompatActivity {
             }
         });
 
-        TextView changeAddressData = findViewById(R.id.changeAddressData);
+        Button changeAddressData = findViewById(R.id.changeAddressData);
         changeAddressData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,6 +68,25 @@ public class AdminPanel extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(AdminPanel.this, Login.class);
                 startActivity(intent);
+            }
+        });
+
+        EditText adminEmail = findViewById(R.id.adminEmail);
+        Button addEmployee = findViewById(R.id.addEmployee);
+        addEmployee.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String valEmail = adminEmail.getText().toString();
+
+                if(valEmail.isEmpty()) {
+
+                    if(valEmail.isEmpty()) { adminEmail.setError("Podaj adres e-mail!"); }
+
+                } else {
+                    String query = "UPDATE psm_computer_store.osoby SET rola = 'pracownik' WHERE email like '"+valEmail+"';";
+
+                    update(query);
+                }
             }
         });
     }
@@ -219,35 +240,5 @@ public class AdminPanel extends AppCompatActivity {
             }
             return userID;
         }
-
-        AdminPanel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String valEmail = email.getText().toString();
-
-                if(valEmail.isEmpty()) {
-
-                    if(valEmail.isEmpty()) { email.setError("Podaj adres e-mail!"); }
-
-                } else {
-
-                    String insertEmail = "UPDATE psm_computer_store.osoby SET rola = 'pracownik' WHERE email like '";
-
-                    try{
-                        connect.insert(insertEmail, connect.getConnection());
-                    }
-                    catch (Exception e) {
-                        e.printStackTrace();
-                    }finally {
-                        connect.close();
-                        Intent intent = new Intent(AdminPanel.this, MainActivityEmployee.class);
-                        startActivity(intent);
-
-                    }
-                }
-            }
-        });
-
     }
 }

@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
 import android.widget.ImageButton;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -26,6 +29,15 @@ public class MainActivityEmployee extends AppCompatActivity {
         setContentView(R.layout.activity_main_employee);
 
         showProducts();
+
+        SwipeRefreshLayout pullToRefresh = findViewById(R.id.swipeRefreshLayout);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                pullToRefresh.setRefreshing(false);
+                showProducts();
+            }
+        });
 
         ImageButton AdminSettings = findViewById(R.id.admin);
         AdminSettings.setOnClickListener(new View.OnClickListener() {
@@ -49,8 +61,8 @@ public class MainActivityEmployee extends AppCompatActivity {
         CheckOrders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-     //           Intent intent = new Intent(MainActivityEmployee.this,CheckOrders.class);
-     //           startActivity(intent);
+                Intent intent = new Intent(MainActivityEmployee.this,CheckOrders.class);
+                startActivity(intent);
             }
         });
 

@@ -1,9 +1,14 @@
 package com.example.pcmarket;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -28,6 +33,8 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        checkAndHandleNetworkConnectivity();
 
         Button login = findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
@@ -151,5 +158,54 @@ public class Login extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    private Handler handler = new Handler();
+    private boolean isRefreshing = false;
+    private static final long REFRESH_INTERVAL = 30000;
+
+    private void checkAndHandleNetworkConnectivity() {
+        if (!isNetworkAvailable()) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            Toast.makeText(getApplicationContext(), "Brak połączenia z internetem!", Toast.LENGTH_SHORT).show();
+
+            if (!isRefreshing) {
+                startRefreshing();
+            }
+        }
+    }
+
+    private void startRefreshing() {
+        isRefreshing = true;
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (isNetworkAvailable()) {
+                    refreshActivity();
+                } else {
+                    startRefreshing();
+                }
+            }
+        }, REFRESH_INTERVAL);
+    }
+
+    private void refreshActivity() {
+        finish();
+        startActivity(getIntent());
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager != null) {
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        }
+        return false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacksAndMessages(null);
     }
 }

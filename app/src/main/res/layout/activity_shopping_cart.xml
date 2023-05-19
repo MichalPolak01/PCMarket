@@ -40,7 +40,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_marginTop="70dp"
-            android:layout_marginBottom="320dp"
+            android:layout_marginBottom="210dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/recyclerview" />
@@ -60,95 +60,48 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" >
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:padding="20dp"
-                        android:background="#66798DA0"
-                        android:id="@+id/linear" >
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="15dp">
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/orderInfo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical" >
+                        android:layout_marginTop="10dp"
+                        android:text="Podsumowanie zamówienia"
+                        android:textSize="25dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/cyan"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" />
 
-                        <TextView
-                            android:id="@+id/delivery"
-                            android:layout_width="match_parent"
-                            android:layout_height="60dp"
-                            android:text="Wybierz opcję dostawy:"
-                            android:textSize="25dp"
-                            android:textColor="#3795BD"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/selector" />
+                    <TextView
+                        android:id="@+id/price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="italic"
+                        android:textSize="25dp"
+                        android:textColor="#3795BD"
+                        app:layout_constraintTop_toBottomOf="@id/orderInfo"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" />
 
-                        <RadioGroup
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:id="@+id/radioGroup"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/selectSort">
+                    <Button
+                        style="@style/button2"
+                        android:id="@+id/order"
+                        android:layout_marginTop="20dp"
+                        android:background="#3795BD"
+                        android:backgroundTint="@null"
+                        android:text="Zamawiam"
+                        app:layout_constraintTop_toBottomOf="@id/price"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" />
 
-                            <RadioButton
-                                android:id="@+id/radio1"
-                                android:textColor="@color/teal"
-                                android:text="Kurier DHL (14.99)"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-
-                            <RadioButton
-                                android:id="@+id/radio2"
-                                android:textColor="@color/teal"
-                                android:text="Kurier DPD (17.99)"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-
-                            <RadioButton
-                                android:id="@+id/radio3"
-                                android:textColor="@color/teal"
-                                android:text="Poczta Polska (10.99)"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:checked="true" />
-
-                            <RadioButton
-                                android:id="@+id/radio4"
-                                android:textColor="@color/teal"
-                                android:text="Paczkomat InPost (12.99)"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-
-                        </RadioGroup>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical" >
-
-                        <TextView
-                            android:id="@+id/price"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="100dp"
-                            android:textSize="35dp"
-                            android:textColor="@color/cyan" />
-
-                        <Button
-                            style="@style/button2"
-                            android:id="@+id/order"
-                            android:layout_marginTop="25dp"
-                            android:background="#3795BD"
-                            android:backgroundTint="@null"
-                            android:text="Zamawiam" />
-
-                    </LinearLayout>
-                </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>

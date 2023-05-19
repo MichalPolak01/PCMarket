@@ -32,7 +32,7 @@ public class AccountSettings extends AppCompatActivity {
         String addresID = loadDataPerosnal();
         loadDataAddress(addresID);
 
-        TextView changePersonalData = findViewById(R.id.changePersonalData);
+        Button changePersonalData = findViewById(R.id.changePersonalData);
         changePersonalData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,7 +43,7 @@ public class AccountSettings extends AppCompatActivity {
             }
         });
 
-        TextView changeAddressData = findViewById(R.id.changeAddressData);
+        Button changeAddressData = findViewById(R.id.changeAddressData);
         changeAddressData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

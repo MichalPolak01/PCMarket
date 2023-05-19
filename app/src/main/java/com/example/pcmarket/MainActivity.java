@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -29,6 +30,15 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
         showProducts();
+
+        SwipeRefreshLayout pullToRefresh = findViewById(R.id.swipeRefreshLayout);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                pullToRefresh.setRefreshing(false);
+                showProducts();
+            }
+        });
 
         ImageButton accountSettings = findViewById(R.id.account);
         accountSettings.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +81,7 @@ public class MainActivity extends AppCompatActivity{
             where = "";
         }
 
-        String query = "SELECT * FROM psm_computer_store.produkty "+where;
+        String query = "SELECT * FROM psm_computer_store.produkty WHERE ilosc > 0 "+where;
 
         ResultSet result = connect.select(query, connect.getConnection());
 

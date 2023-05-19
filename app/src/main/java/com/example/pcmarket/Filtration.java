@@ -52,17 +52,17 @@ public class Filtration extends AppCompatActivity {
                 String whereCategory = "";
                 String where = "";
                 if(nameValue.length() > 0) {
-                    whereName = " nazwa like \'%"+nameValue+"%\'";
+                    whereName = " nazwa like '%"+nameValue+"%'";
 
                     if(checkedCategory.length() > 0) {
-                        whereCategory = " AND kategoria like \'"+checkedCategory+"\'";
+                        whereCategory = " AND kategoria like '"+checkedCategory+"'";
                     }
-                    where = " WHERE"+ whereName+""+whereCategory;
+                    where = " AND "+ whereName+""+whereCategory;
                 } else {
                     if(checkedCategory.length() > 0) {
-                        whereCategory = " kategoria like \'"+checkedCategory+"\'";
+                        whereCategory = " kategoria like '"+checkedCategory+"'";
                     }
-                    where = " WHERE "+whereCategory;
+                    where = " AND "+whereCategory;
                 }
 
                 String query = where+""+orderBy;
