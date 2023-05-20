@@ -1,0 +1,719 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 14.5
+-- Dumped by pg_dump version 15.1
+
+-- Started on 2023-05-20 02:17:43
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 19 (class 2615 OID 217031)
+-- Name: psm_computer_store; Type: SCHEMA; Schema: -; Owner: 2023_polak_michal
+--
+
+CREATE SCHEMA psm_computer_store;
+
+
+ALTER SCHEMA psm_computer_store OWNER TO "2023_polak_michal";
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 247 (class 1259 OID 217040)
+-- Name: adresy; Type: TABLE; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+CREATE TABLE psm_computer_store.adresy (
+    id_adresu integer NOT NULL,
+    ulica character varying(50) NOT NULL,
+    kod_pocztowy character varying(6) NOT NULL,
+    miasto character varying(30) NOT NULL
+);
+
+
+ALTER TABLE psm_computer_store.adresy OWNER TO "2023_polak_michal";
+
+--
+-- TOC entry 246 (class 1259 OID 217039)
+-- Name: adresy_id_adresu_seq; Type: SEQUENCE; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+CREATE SEQUENCE psm_computer_store.adresy_id_adresu_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE psm_computer_store.adresy_id_adresu_seq OWNER TO "2023_polak_michal";
+
+--
+-- TOC entry 4885 (class 0 OID 0)
+-- Dependencies: 246
+-- Name: adresy_id_adresu_seq; Type: SEQUENCE OWNED BY; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+ALTER SEQUENCE psm_computer_store.adresy_id_adresu_seq OWNED BY psm_computer_store.adresy.id_adresu;
+
+
+--
+-- TOC entry 253 (class 1259 OID 218095)
+-- Name: lista_zakupow; Type: TABLE; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+CREATE TABLE psm_computer_store.lista_zakupow (
+    id_produktu_w_koszyku integer NOT NULL,
+    id_osoby integer,
+    id_produktu integer,
+    ilosc integer
+);
+
+
+ALTER TABLE psm_computer_store.lista_zakupow OWNER TO "2023_polak_michal";
+
+--
+-- TOC entry 252 (class 1259 OID 218094)
+-- Name: lista_zakupow_id_produktu_w_koszyku_seq; Type: SEQUENCE; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+CREATE SEQUENCE psm_computer_store.lista_zakupow_id_produktu_w_koszyku_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE psm_computer_store.lista_zakupow_id_produktu_w_koszyku_seq OWNER TO "2023_polak_michal";
+
+--
+-- TOC entry 4887 (class 0 OID 0)
+-- Dependencies: 252
+-- Name: lista_zakupow_id_produktu_w_koszyku_seq; Type: SEQUENCE OWNED BY; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+ALTER SEQUENCE psm_computer_store.lista_zakupow_id_produktu_w_koszyku_seq OWNED BY psm_computer_store.lista_zakupow.id_produktu_w_koszyku;
+
+
+--
+-- TOC entry 249 (class 1259 OID 217047)
+-- Name: osoby; Type: TABLE; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+CREATE TABLE psm_computer_store.osoby (
+    id_osoby integer NOT NULL,
+    imie character varying(50) NOT NULL,
+    nazwisko character varying(50) NOT NULL,
+    email character varying(70) NOT NULL,
+    nr_telefonu character varying(12),
+    haslo character varying(50) NOT NULL,
+    id_adresu integer NOT NULL,
+    rola character varying(10) DEFAULT 'klient'::character varying
+);
+
+
+ALTER TABLE psm_computer_store.osoby OWNER TO "2023_polak_michal";
+
+--
+-- TOC entry 248 (class 1259 OID 217046)
+-- Name: osoby_id_osoby_seq; Type: SEQUENCE; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+CREATE SEQUENCE psm_computer_store.osoby_id_osoby_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE psm_computer_store.osoby_id_osoby_seq OWNER TO "2023_polak_michal";
+
+--
+-- TOC entry 4889 (class 0 OID 0)
+-- Dependencies: 248
+-- Name: osoby_id_osoby_seq; Type: SEQUENCE OWNED BY; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+ALTER SEQUENCE psm_computer_store.osoby_id_osoby_seq OWNED BY psm_computer_store.osoby.id_osoby;
+
+
+--
+-- TOC entry 251 (class 1259 OID 217986)
+-- Name: produkty; Type: TABLE; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+CREATE TABLE psm_computer_store.produkty (
+    id_produktu integer NOT NULL,
+    nazwa character varying(100) NOT NULL,
+    marka character varying(100) NOT NULL,
+    cena numeric(12,2) NOT NULL,
+    zdjecie character varying(500) NOT NULL,
+    ilosc integer DEFAULT 0,
+    opis character varying(500),
+    kategoria character varying(100) DEFAULT 'inne'::character varying,
+    data_dodania date DEFAULT CURRENT_DATE
+);
+
+
+ALTER TABLE psm_computer_store.produkty OWNER TO "2023_polak_michal";
+
+--
+-- TOC entry 250 (class 1259 OID 217985)
+-- Name: produkty_id_produktu_seq; Type: SEQUENCE; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+CREATE SEQUENCE psm_computer_store.produkty_id_produktu_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE psm_computer_store.produkty_id_produktu_seq OWNER TO "2023_polak_michal";
+
+--
+-- TOC entry 4892 (class 0 OID 0)
+-- Dependencies: 250
+-- Name: produkty_id_produktu_seq; Type: SEQUENCE OWNED BY; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+ALTER SEQUENCE psm_computer_store.produkty_id_produktu_seq OWNED BY psm_computer_store.produkty.id_produktu;
+
+
+--
+-- TOC entry 257 (class 1259 OID 219646)
+-- Name: zamowienia; Type: TABLE; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+CREATE TABLE psm_computer_store.zamowienia (
+    id_zamowienia character varying NOT NULL,
+    id_klienta integer NOT NULL,
+    kwota numeric(12,2) NOT NULL,
+    data_zlozenia_zamowienia date NOT NULL,
+    data_wyslania_zamowienia date,
+    status_zamowienia character varying(20) DEFAULT 'kompletowanie'::character varying
+);
+
+
+ALTER TABLE psm_computer_store.zamowienia OWNER TO "2023_polak_michal";
+
+--
+-- TOC entry 256 (class 1259 OID 219645)
+-- Name: zamowienia_id_zamowienia_seq; Type: SEQUENCE; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+CREATE SEQUENCE psm_computer_store.zamowienia_id_zamowienia_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE psm_computer_store.zamowienia_id_zamowienia_seq OWNER TO "2023_polak_michal";
+
+--
+-- TOC entry 4894 (class 0 OID 0)
+-- Dependencies: 256
+-- Name: zamowienia_id_zamowienia_seq; Type: SEQUENCE OWNED BY; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+ALTER SEQUENCE psm_computer_store.zamowienia_id_zamowienia_seq OWNED BY psm_computer_store.zamowienia.id_zamowienia;
+
+
+--
+-- TOC entry 259 (class 1259 OID 219765)
+-- Name: zamowione_produkty; Type: TABLE; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+CREATE TABLE psm_computer_store.zamowione_produkty (
+    id_zamowionego_produktu integer NOT NULL,
+    id_zamowienia character varying NOT NULL,
+    id_produktu character varying NOT NULL,
+    ilosc integer NOT NULL
+);
+
+
+ALTER TABLE psm_computer_store.zamowione_produkty OWNER TO "2023_polak_michal";
+
+--
+-- TOC entry 258 (class 1259 OID 219764)
+-- Name: zamowione_produkty_id_zamowionego_produktu_seq; Type: SEQUENCE; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+CREATE SEQUENCE psm_computer_store.zamowione_produkty_id_zamowionego_produktu_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE psm_computer_store.zamowione_produkty_id_zamowionego_produktu_seq OWNER TO "2023_polak_michal";
+
+--
+-- TOC entry 4895 (class 0 OID 0)
+-- Dependencies: 258
+-- Name: zamowione_produkty_id_zamowionego_produktu_seq; Type: SEQUENCE OWNED BY; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+ALTER SEQUENCE psm_computer_store.zamowione_produkty_id_zamowionego_produktu_seq OWNED BY psm_computer_store.zamowione_produkty.id_zamowionego_produktu;
+
+
+--
+-- TOC entry 4700 (class 2604 OID 217043)
+-- Name: adresy id_adresu; Type: DEFAULT; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+ALTER TABLE ONLY psm_computer_store.adresy ALTER COLUMN id_adresu SET DEFAULT nextval('psm_computer_store.adresy_id_adresu_seq'::regclass);
+
+
+--
+-- TOC entry 4707 (class 2604 OID 218098)
+-- Name: lista_zakupow id_produktu_w_koszyku; Type: DEFAULT; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+ALTER TABLE ONLY psm_computer_store.lista_zakupow ALTER COLUMN id_produktu_w_koszyku SET DEFAULT nextval('psm_computer_store.lista_zakupow_id_produktu_w_koszyku_seq'::regclass);
+
+
+--
+-- TOC entry 4701 (class 2604 OID 217050)
+-- Name: osoby id_osoby; Type: DEFAULT; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+ALTER TABLE ONLY psm_computer_store.osoby ALTER COLUMN id_osoby SET DEFAULT nextval('psm_computer_store.osoby_id_osoby_seq'::regclass);
+
+
+--
+-- TOC entry 4703 (class 2604 OID 217989)
+-- Name: produkty id_produktu; Type: DEFAULT; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+ALTER TABLE ONLY psm_computer_store.produkty ALTER COLUMN id_produktu SET DEFAULT nextval('psm_computer_store.produkty_id_produktu_seq'::regclass);
+
+
+--
+-- TOC entry 4708 (class 2604 OID 219774)
+-- Name: zamowienia id_zamowienia; Type: DEFAULT; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+ALTER TABLE ONLY psm_computer_store.zamowienia ALTER COLUMN id_zamowienia SET DEFAULT nextval('psm_computer_store.zamowienia_id_zamowienia_seq'::regclass);
+
+
+--
+-- TOC entry 4710 (class 2604 OID 219768)
+-- Name: zamowione_produkty id_zamowionego_produktu; Type: DEFAULT; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+ALTER TABLE ONLY psm_computer_store.zamowione_produkty ALTER COLUMN id_zamowionego_produktu SET DEFAULT nextval('psm_computer_store.zamowione_produkty_id_zamowionego_produktu_seq'::regclass);
+
+
+--
+-- TOC entry 4867 (class 0 OID 217040)
+-- Dependencies: 247
+-- Data for Name: adresy; Type: TABLE DATA; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+COPY psm_computer_store.adresy (id_adresu, ulica, kod_pocztowy, miasto) FROM stdin;
+1	Wyszyńskiego 5A	33-170	Tuchów
+2	Mickiewicza 10	33-100	Tarnów
+4	Klonowa 12	33-100	Tarnów 
+5	Towarowa 21/37	33-100	Tarnów 
+6	Towarowa 21/37	33-100	Tarnów 
+7	Towarowa 37/21	33-100	Tarnów 
+8	Kopernika 12	33-100	Tarnów 
+10	Leśna 56	33-100	Tarnów 
+11	Jana Pawła II 15	70-000	Szczecin
+13	Kopernika 123	33-100	Tarnów 
+14	Jasna 23	33-100	Tarnow
+9	Wysoka 34	33-100	Tarnów 
+15	Jana Pawla 2 38	33-100	Tarnow
+\.
+
+
+--
+-- TOC entry 4873 (class 0 OID 218095)
+-- Dependencies: 253
+-- Data for Name: lista_zakupow; Type: TABLE DATA; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+COPY psm_computer_store.lista_zakupow (id_produktu_w_koszyku, id_osoby, id_produktu, ilosc) FROM stdin;
+20	8	8	1
+\.
+
+
+--
+-- TOC entry 4869 (class 0 OID 217047)
+-- Dependencies: 249
+-- Data for Name: osoby; Type: TABLE DATA; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+COPY psm_computer_store.osoby (id_osoby, imie, nazwisko, email, nr_telefonu, haslo, id_adresu, rola) FROM stdin;
+2	Jan	Kowalski	jan@gmail.com	+48500300200	jan123	2	klient
+4	Marek	Towarek	marek2137@towarek.eu	213721371	marek123	7	klient
+5	Maciej	Kowalski	maciek12@gmail.com	111222333	maciek123	8	klient
+7	Kamil	Kwiatkowski	kamil@interia.pl	120334123	kamil123	10	klient
+9	Czesław 	Nowak	czesio12@o2.pl	123123123	czesio123	4	klient
+11	Marek	Wysoki	marek12@o2.pl	456456456	marek123	13	klient
+1	Michał	Polak	michalpolak01@interia.pl	+48512046414	michal123	1	pracownik
+12	Krzystof	Kolonko	krzystoff@o2.pl	123123123	krzys123	14	klient
+8	Krzysztof	Jarzyna	krzys@o2.pl	321321321	krzys123	11	pracownik
+6	Jan	Pawel Drugi	jan@o2.com	452234090	jan123	9	klient
+13	Marek	Nowak	marek@o2.pl	555666777	marek123	15	pracownik
+\.
+
+
+--
+-- TOC entry 4871 (class 0 OID 217986)
+-- Dependencies: 251
+-- Data for Name: produkty; Type: TABLE DATA; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+COPY psm_computer_store.produkty (id_produktu, nazwa, marka, cena, zdjecie, ilosc, opis, kategoria, data_dodania) FROM stdin;
+17	Procesor Intel Core i5-11600K	Intel	899.00	https://i.imgur.com/Aq5Xe8h.png	5	Procesor dla wymagających graczy, zapewniający doskonałą wydajność w grach oraz w codziennych zadaniach. Dzięki 6 rdzeniom i 12 wątkom procesor ten jest w stanie poradzić sobie z większością zadań, jakie stawia przed nim użytkownik. Dodatkowo, procesor ten jest wyposażony w technologię Intel Turbo Boost, która automatycznie zwiększa taktowanie procesora w razie potrzeby.	Procesor	2023-05-06
+20	Karta graficzna Nvidia GeForce RTX 3080	Nvidia	4699.00	https://i.imgur.com/NVj1k0c.png	3	Wydajna karta graficzna dla najbardziej wymagających użytkowników, zapewniająca płynną i realistyczną grafikę w grach.	karta graficzna	2023-05-06
+24	Karta graficzna Nvidia GeForce RTX 3060 Ti	Nvidia	2199.00	https://i.imgur.com/K2UF8Pv.png	9	Karta graficzna dla graczy, zapewniająca doskonałą wydajność w średnio-wysokich ustawieniach graficznych.	Karta graficzna	2023-05-06
+19	Karta graficzna MSI GeForce RTX 3080 Ti	MSI	4999.00	https://i.imgur.com/2m7scdd.png	3	Wydajna karta graficzna dla graczy, zapewniająca doskonałą wydajność i płynność działania w grach.	Karta graficzna	2023-05-06
+23	Karta graficzna AMD Radeon RX 5700 XT	AMD	2499.00	https://i.imgur.com/UyQP3lS.png	8	Wydajna karta graficzna dla średniozaawansowanych graczy, zapewniająca płynną grafikę w większości gier.	Karta graficzna	2023-05-06
+13	Laptop Asus ROG Zephyrus G14	Asus	7399.00	https://i.imgur.com/hXGRuPA.png	3	Wydajny laptop dla graczy z ekranem o przekątnej 14 cali, wyposażony w procesor AMD Ryzen 9 5900HS, kartę graficzną NVIDIA GeForce RTX 3060, 16 GB pamięci RAM i dysk SSD o pojemności 1 TB.	Laptop	2023-05-06
+12	Laptop HP Spectre x360	HP	6599.00	https://i.imgur.com/vg9edBu.png	3	Elegancki laptop z ekranem o przekątnej 13,3 cala, wyposażony w procesor Intel Core i7-1165G7, kartę graficzną Intel Iris Xe, 16 GB pamięci RAM i dysk SSD o pojemności 1 TB.	Laptop	2023-05-06
+14	Laptop Apple MacBook Pro	Apple	9999.00	https://i.imgur.com/TZRL9A8.png	4	Wydajny laptop z ekranem Retina o przekątnej 13 cali, wyposażony w procesor Apple M1, kartę graficzną Apple M1, 16 GB pamięci RAM i dysk SSD o pojemności 512 GB.	Laptop	2023-05-06
+9	Laptop biznesowy Dell Latitude 5420	Dell	3299.99	https://i.imgur.com/nrt7Z1I.png	3	Wydajny laptop dla użytkowników biznesowych, zapewniający wysoką wydajność i niezawodność.	Laptop	2023-05-06
+11	Laptop Lenovo ThinkPad X1 Carbon	Lenovo	16299.99	https://i.imgur.com/JxInJaY.png	6	Lekki i wytrzymały laptop biznesowy z ekranem o przekątnej 14 cali, wyposażony w procesor Intel Core i7-1165G7, kartę graficzną Intel Iris Xe, 16 GB pamięci RAM i dysk SSD o pojemności 512 GB.	Laptop	2023-05-06
+3	Dell XPS 13 9305-9366	Dell	6999.00	https://i.imgur.com/HCTs9Mo.png	2	Laptop Dell XPS 13 to idealny sprzęt dla\n\t\tosób, które potrzebują mobilnego, wydajnego i stylowego urządzenia. Posiada procesor\n\t\tIntel Core i7, 16 GB RAM i 512 GB dysk SSD. Ekran 13 cali z matrycą OLED zapewnia\n\t\tniesamowitą jakość obrazu.	Laptop	2023-05-05
+4	ASUS RT-AX82U	ASUS	349.00	https://i.imgur.com/oWCKHsI.png	7	Router WiFi ASUS to idealny wybór dla osób, które potrzebują stabilnego i \n\t\tszybkiego połączenia internetowego. Posiada technologię MU-MIMO, obsługuje standardy \n\t\t802.11ac i 802.11n oraz ma pięć anten zewnętrznych dla lepszej wydajności.	Router	2023-05-05
+16	Procesor AMD Ryzen 9 5950X	AMD	2499.99	https://i.imgur.com/fvF6O6c.png	1	Jeden z najlepszych procesorów na rynku, zapewniający doskonałą wydajność w grach i aplikacjach. Dzięki 16 rdzeniom i 32 wątkom procesor ten jest w stanie poradzić sobie z nawet najbardziej wymagającymi zadaniami, takimi jak renderowanie filmów czy pracę z bazami danych. Dodatkowo, procesor ten posiada wyjątkowo niskie zużycie energii, co przekłada się na niższe rachunki za prąd.	Procesor	2023-05-06
+8	Laptop gamingowy ASUS ROG Strix G17	ASUS	8799.00	https://i.imgur.com/F2RLZee.png	5	Najnowszy model laptopa gamingowego z wydajnymi podzespołami i kartą graficzną RTX 3070.	Laptop	2023-05-06
+2	Samsung LU28R550UQRXEN 28 UHD 4K IPS	Samsung	1799.00	https://i.imgur.com/R9kOlkP.png	4	Monitor Samsung 4K zapewnia niesamowitą jakość obrazu i bogate kolory. Posiada \n\t\tmatrycę IPS, obsługuje technologię HDR i ma odświeżanie 60 Hz. Idealnie nadaje się do \n\t\tpracy, gier i oglądania filmów.	Monitor	2023-05-05
+15	Procesor Intel Core i9-11900K	Intel	1679.00	https://i.imgur.com/xK3WuLs.png	3	Wysokiej klasy procesor dla wymagających użytkowników, zapewniający wydajność na najwyższym poziomie. Dzięki 8 rdzeniom i 16 wątkom procesor ten jest świetnym wyborem do zadań wymagających dużej mocy obliczeniowej, takich jak praca z grafiką czy edycja wideo. Dodatkowo, procesor ten zapewnia świetne osiągi w grach, co sprawia, że jest on idealnym wyborem dla graczy.	Procesor	2023-05-06
+5	Palit GeForce RTX 3070 Ti Gaming Pro	NVIDIA	3499.99	https://i.imgur.com/suVh5LB.png	1	Karta graficzna NVIDIA GeForce RTX 3070 zapewnia niezwykłą wydajność w grach i pracy z grafiką. \n\t\tPosiada 8 GB pamięci VRAM, obsługuje technologię ray tracing i ma 5888 rdzeni CUDA. Idealna do \n\t\tzestawów komputerowych dla wymagających użytkowników.	Karta graficzna	2023-05-05
+18	Procesor AMD Ryzen 7 5800X	AMD	1039.00	https://i.imgur.com/nTXoxOV.png	1	Wydajny procesor dla graczy i wymagających użytkowników, zapewniający doskonałą wydajność w grach oraz w aplikacjach wymagających dużej mocy obliczeniowej. Dzięki 8 rdzeniom i 16 wątkom procesor ten jest w stanie poradzić sobie z większością zadań, jakie stawia przed nim użytkownik. Dodatkowo, procesor ten posiada bardzo niskie zużycie energii, co przekłada się na niższe rachunki za prąd.	Procesor	2023-05-06
+6	Sony WF-1000XM4	Sony	399.89	https://i.imgur.com/cajPFjz.png	1	Bezprzewodowe słuchawki douszne Sony to idealny wybór dla osób, które cenią sobie \n\t\tswobodę i wygodę. Posiadają funkcję redukcji hałasu, łatwe sparowanie z urządzeniami \n\t\ti ładują się w etui. Bateria pozwala na słuchanie muzyki do 9 godzin bez ładowania.	Słuchawki	2023-05-05
+25	Płyta główna ASUS ROG Strix Z590-E	ASUS	1299.00	https://i.imgur.com/zcxQ1WD.png	10	Płyta główna wyposażona w chipset Z590, zapewniający doskonałą wydajność dla procesorów Intel Core i9. Wyposażona w wiele dodatkowych funkcji, takich jak technologia Wi-Fi 6, RGB Aura Sync czy wbudowany układ dźwiękowy SupremeFX.	Płyta główna	2023-05-06
+26	Płyta główna MSI MAG B550 Tomahawk	MSI	849.00	https://i.imgur.com/yJAXIdo.png	7	Płyta główna wyposażona w chipset B550, zapewniający doskonałą wydajność dla procesorów AMD Ryzen. Posiada wiele funkcji dedykowanych graczom, takich jak Audio Boost, Lightning Gen4 M.2 czy technologię Mystic Light RGB.	Płyta główna	2023-05-06
+27	Płyta główna Gigabyte AORUS X570 Master	Gigabyte	1399.00	https://i.imgur.com/DLfHfNR.png	5	Płyta główna wyposażona w chipset X570, zapewniający doskonałą wydajność dla procesorów AMD Ryzen. Wyposażona w wiele funkcji dedykowanych graczom i entuzjastom, takich jak wbudowane chłodzenie, Wi-Fi 6, RGB Fusion 2.0 czy wbudowany układ dźwiękowy ALC1220-VB.	Płyta główna	2023-05-06
+28	Płyta główna ASRock X570 Taichi	ASRock	1249.00	https://i.imgur.com/jboOlNe.png	3	Płyta główna wyposażona w chipset X570, zapewniający doskonałą wydajność dla procesorów AMD Ryzen. Wyposażona w wiele funkcji dedykowanych graczom i entuzjastom, takich jak wbudowane chłodzenie, technologię Wi-Fi 6, wbudowany układ dźwiękowy Realtek ALC1220 czy wiele złączy USB i SATA.	Płyta główna	2023-05-06
+29	Płyta główna MSI MPG Z490 Gaming Edge	MSI	1099.00	https://i.imgur.com/vrgNHDe.png	8	Płyta główna wyposażona w chipset Z490, zapewniający doskonałą wydajność dla procesorów Intel Core i9. Posiada wiele funkcji dedykowanych graczom, takich jak Audio Boost, technologię Mystic Light RGB czy Lightning Gen4 M.2.	Płyta główna	2023-05-06
+30	Pamięć RAM Corsair Vengeance LPX DDR4 3200 MHz	Corsair	299.00	https://i.imgur.com/lJlFE1d.png	4	Wydajne pamięci RAM z serii Vengeance LPX, zaprojektowane z myślą o graczach i wymagających użytkownikach. Wyposażone w profil XMP 2.0 i radiator aluminiowy, zapewniające szybką i stabilną pracę.	Pamięć RAM	2023-05-06
+31	Pamięć RAM G.Skill Ripjaws V DDR4 3600 MHz	G.Skill	329.00	https://i.imgur.com/sXuZYvM.png	14	Szybkie pamięci RAM z serii Ripjaws V, wyposażone w radiator aluminiowy i specjalny profil XMP 2.0, zapewniający doskonałą wydajność.	Pamięć RAM	2023-05-06
+32	Pamięć RAM Kingston HyperX Fury DDR4 2666 MHz	Kingston	279.00	https://i.imgur.com/6BEeLjU.png	8	Wydajne pamięci RAM z serii HyperX Fury, przeznaczone dla graczy i wymagających użytkowników. Wyposażone w radiator aluminiowy i specjalny profil XMP, zapewniający szybką i stabilną pracę.	Pamięć RAM	2023-05-06
+33	Pamięć RAM Crucial Ballistix DDR4 3200 MHz	Crucial	299.00	https://i.imgur.com/17zBCMa.png	9	Szybkie pamięci RAM z serii Ballistix, wyposażone w radiator aluminiowy i specjalny profil XMP 2.0, zapewniający doskonałą wydajność.	Pamięć RAM	2023-05-06
+34	Pamięć RAM Patriot Viper 4 Blackout DDR4 3600 MHz	Patriot	319.00	https://i.imgur.com/lqAayz8.png	10	Wydajne pamięci RAM z serii Viper 4 Blackout, zaprojektowane z myślą o graczach i wymagających użytkownikach. Wyposażone w radiator aluminiowy i specjalny profil XMP 2.0, zapewniający szybką i stabilną pracę.	Pamięć RAM	2023-05-06
+35	Dysk SSD Samsung 970 PRO	Samsung	699.00	https://i.imgur.com/alglMbV.png	6	Szybki i niezawodny dysk SSD z interfejsem NVMe, oferujący szybkość odczytu i zapisu do 3,5 GB/s i 2,7 GB/s. Pojemność 512 GB.	Dysk SSD	2023-05-06
+36	Dysk SSD Crucial MX500	Crucial	299.00	https://i.imgur.com/SH2vb5U.png	2	Doskonały wybór dla tych, którzy szukają szybkiego i wydajnego dysku SSD w przystępnej cenie. Oferuje prędkość odczytu i zapisu do 560 MB/s i 510 MB/s. Pojemność od 250 GB do 2 TB.	Dysk SSD	2023-05-06
+37	Dysk SSD Western Digital Black SN750	Western Digital	399.00	https://i.imgur.com/LIoNUOA.png	3	Wydajny dysk SSD z interfejsem NVMe, oferujący prędkość odczytu i zapisu do 3,47 GB/s i 3 GB/s. Dostępny w pojemnościach od 250 GB do 2 TB.	Dysk SSD	2023-05-06
+38	Dysk SSD Kingston A2000	Kingston	199.00	https://i.imgur.com/SLtyrIL.png	1	Tani, ale wydajny dysk SSD z interfejsem NVMe, oferujący prędkość odczytu i zapisu do 2,2 GB/s i 2 GB/s. Pojemność od 250 GB do 1 TB.	Dysk SSD	2023-05-06
+39	Dysk SSD Intel SSD 660p	Intel	149.00	https://i.imgur.com/CYEvikt.png	5	Budżetowy dysk SSD z interfejsem NVMe, oferujący prędkość odczytu i zapisu do 1,8 GB/s i 1,6 GB/s. Pojemność od 512 GB do 2 TB.	Dysk SSD	2023-05-06
+40	Karta dźwiękowa Asus Xonar AE	Asus	399.00	https://i.imgur.com/KGOdXYQ.png	1	Karta dźwiękowa dla wymagających użytkowników, zapewniająca doskonałą jakość dźwięku. Posiada 192kHz/24-bitowy przetwornik, który gwarantuje czysty i wyraźny dźwięk. Ponadto, karta ta oferuje tryb gier, który pozwala użytkownikom na słyszenie nawet najmniejszych szczegółów podczas rozgrywki.	Karta dźwiękowa	2023-05-06
+41	Karta dźwiękowa Creative Sound Blaster ZxR	Creative	1299.00	https://i.imgur.com/P8t3jQc.png	1	Profesjonalna karta dźwiękowa dla najbardziej wymagających użytkowników, zapewniająca doskonałą jakość dźwięku. Posiada 124 dB sygnał/szum, który umożliwia użytkownikom słyszenie każdego detalu dźwięku. Karta ta jest także wyposażona w złącza gold-plated, które zapewniają lepszą jakość sygnału.	Karta dźwiękowa	2023-05-06
+42	Obudowa komputerowa NZXT H510	NZXT	349.00	https://i.imgur.com/nSOKXli.png	3	Nowoczesna obudowa z przeszklonym panelem bocznym, zapewniająca dobrą wentylację i możliwość łatwej rozbudowy komputera.	Obudowa komputerowa	2023-05-06
+43	Obudowa komputerowa Corsair Obsidian Series 500D	Corsair	949.00	https://i.imgur.com/71ngZGN.png	2	Elegancka obudowa z aluminiowym panelem przednim, wyposażona w wysokiej jakości wentylatory i wiele udogodnień dla użytkownika.	Obudowa komputerowa	2023-05-06
+44	Obudowa komputerowa Fractal Design Meshify C	Fractal Design	349.99	https://i.imgur.com/QF2FnCm.png	10	Obudowa z siatką z przodu, zapewniająca dobrą wentylację i łatwą konserwację. Wyposażona w wiele udogodnień dla użytkownika, takich jak przesuwane panele boczne.	Obudowa komputerowa	2023-05-06
+45	Obudowa komputerowa Phanteks Eclipse P400A	Phanteks	399.00	https://i.imgur.com/Wg2Tdpx.png	15	Stylowa obudowa z przeszklonym panelem bocznym, wyposażona w mocne wentylatory i wiele udogodnień dla użytkownika.	Obudowa komputerowa	2023-05-06
+46	Obudowa komputerowa Cooler Master MasterCase H500M	Cooler Master	799.00	https://i.imgur.com/k6BhatR.png	5	Obudowa z panelem przednim wykonanym z hartowanego szkła, wyposażona w wiele udogodnień dla użytkownika, takich jak regulowany system wentylacji i łatwy dostęp do podzespołów.	Obudowa komputerowa	2023-05-06
+47	Monitor LG 27GN950-B	LG	4999.00	https://i.imgur.com/QlFhEJd.png	10	27-calowy monitor z matrycą Nano IPS o rozdzielczości 4K, odświeżaniem 144 Hz oraz czasem reakcji wynoszącym 1 ms. Monitor posiada także technologię G-Sync oraz obsługę HDR600.	Monitor	2023-05-06
+48	Monitor ASUS ROG Swift PG279QZ	ASUS	3699.00	https://i.imgur.com/m9SoiZY.png	7	27-calowy monitor z matrycą IPS o rozdzielczości 1440p, odświeżaniem 165 Hz i czasem reakcji 4 ms. Monitor posiada również technologię G-Sync, co zapewnia płynną pracę.	Monitor	2023-05-06
+49	Monitor Dell S2719DGF	Dell	2799.00	https://i.imgur.com/j9HpqyP.png	3	27-calowy monitor z matrycą TN o rozdzielczości 1440p, odświeżaniem 155 Hz i czasem reakcji 1 ms. Monitor posiada technologię FreeSync oraz kompatybilność z G-Sync.	Monitor	2023-05-06
+50	Monitor AOC CQ32G1	AOC	1699.00	https://i.imgur.com/iwc1FTf.png	8	31,5-calowy monitor z matrycą VA o rozdzielczości 1440p, odświeżaniem 144 Hz oraz czasem reakcji 1 ms. Monitor posiada technologię FreeSync oraz zakrzywiony ekran dla lepszej immersji.	Monitor	2023-05-06
+51	Monitor Samsung Odyssey G7	Samsung	5299.00	https://i.imgur.com/rUW4UuF.png	2	27-calowy monitor z matrycą QLED o rozdzielczości 1440p, odświeżaniem 240 Hz oraz czasem reakcji 1 ms. Monitor posiada również technologię FreeSync 2 oraz zakrzywiony ekran dla lepszej immersji.	Monitor	2023-05-06
+52	Zestaw klawiatura + mysz Logitech MK470 Slim	Logitech	199.00	https://i.imgur.com/bQrtEpm.png	10	Wygodny i stylowy zestaw klawiatury i myszy bezprzewodowej, zapewniający doskonałą wygodę i precyzję użytkowania.	Inne	2023-05-06
+53	Mysz Logitech MX Master 3	Logitech	449.00	https://i.imgur.com/Xgy5h8o.png	20	Wygodna i ergonomiczna myszka bezprzewodowa, wyposażona w precyzyjny sensor Darkfield i wiele dodatkowych przycisków.	Mysz	2023-05-06
+54	Mysz Razer DeathAdder Elite	Razer	249.00	https://i.imgur.com/utnNmJH.png	15	Klasyczna myszka gamingowa z bardzo dokładnym sensorem optycznym, wyposażona w programowalne przyciski i podświetlenie RGB.	Mysz	2023-05-06
+56	Mysz Microsoft Surface Precision Mouse	Microsoft	349.00	https://i.imgur.com/ikBalf8.png	8	Elegancka myszka Bluetooth z funkcjonalnymi przyciskami i precyzyjnym sensorem, wyposażona w piękne wykończenie i wysoką jakość wykonania.	Mysz	2023-05-06
+57	Mysz Corsair Dark Core RGB SE	Corsair	349.00	https://i.imgur.com/HU6U2UX.png	18	Wygodna myszka gamingowa bezprzewodowa z precyzyjnym sensorem optycznym, wyposażona w programowalne przyciski i podświetlenie RGB.	Mysz	2023-05-06
+58	Klawiatura Corsair K100 RGB	Corsair	899.00	https://i.imgur.com/ZqYp4J4.png	10	Wysokiej jakości klawiatura mechaniczna, wyposażona w przełączniki Cherry MX Speed i efektowne podświetlenie RGB.	Klawiatura	2023-05-06
+59	Klawiatura Logitech G213 Prodigy	Logitech	259.00	https://i.imgur.com/Hw3SFAC.png	25	Klawiatura membranowa z podświetleniem RGB, przeznaczona dla graczy, wyposażona w podpórkę pod nadgarstek i specjalne klawisze multimedialne.	Klawiatura	2023-05-06
+60	Klawiatura Apple Magic Keyboard	Apple	499.00	https://i.imgur.com/6yWeUgx.png	5	Smukła i elegancka klawiatura bezprzewodowa, zaprojektowana specjalnie dla użytkowników systemu macOS, wyposażona w wbudowany akumulator.	Klawiatura	2023-05-06
+61	Klawiatura HyperX Alloy FPS Pro	HyperX	389.00	https://i.imgur.com/Sf5mH7s.png	15	Klawiatura mechaniczna z przełącznikami Cherry MX Red, przeznaczona dla graczy, wyposażona w podświetlenie czerwonego koloru i odporny na uszkodzenia kabel.	Klawiatura	2023-05-06
+62	Klawiatura Razer Cynosa Chroma	Razer	299.00	https://i.imgur.com/J416bCJ.png	20	Klawiatura membranowa z efektownym podświetleniem Chroma RGB, wyposażona w specjalne klawisze programowalne i odporny na zalania design.	Klawiatura	2023-05-06
+63	Słuchawki HyperX Cloud II	HyperX	499.00	https://i.imgur.com/aJwx4pB.png	12	Wygodne i lekkie słuchawki gamingowe zapewniające doskonały dźwięk i komfort użytkowania. Posiadają mikrofon oraz regulację głośności.	Słuchawki	2023-05-06
+65	Słuchawki JBL Tune 215BT	JBL	199.00	https://i.imgur.com/Cj7ql6j.png	20	Przewodowe słuchawki douszne, zapewniające doskonały dźwięk i wygodę użytkowania. Posiadają mikrofon oraz regulację głośności.	Słuchawki	2023-05-06
+67	Słuchawki Audio-Technica ATH-M50x	Audio-Technica	799.00	https://i.imgur.com/MFDt9YD.png	10	Profesjonalne słuchawki studyjne, zapewniające doskonałą jakość dźwięku oraz wygodę użytkowania. Posiadają wyjmowane przewody oraz regulację głośności.	Słuchawki	2023-05-06
+69	Mikrofon Blue Yeti	Blue Yeti	499.00	https://i.imgur.com/dHNQGfw.png	1	Popularny mikrofon USB, charakteryzujący się wysoką jakością dźwięku i dużą wszechstronnością. Wyposażony w cztery różne tryby nagrywania.	Mikrofon	2023-05-06
+70	Mikrofon Rode NT1-A	Rode	1099.00	https://i.imgur.com/0NdLCsB.png	1	Profesjonalny mikrofon studyjny, charakteryzujący się niezwykle czystym dźwiękiem i niskim poziomem szumów.	Mikrofon	2023-05-06
+71	Mikrofon Audio-Technica AT2020	Audio-Technica	549.00	https://i.imgur.com/yzzIltk.png	1	Uniwersalny mikrofon kondensatorowy, doskonały do nagrywania wokalu, instrumentów akustycznych oraz podcastów.	Mikrofon	2023-05-06
+72	Mikrofon Shure SM7B	Shure	2199.00	https://i.imgur.com/t5NHK6A.png	1	Popularny mikrofon dynamiczny, często wykorzystywany w radiu i podcastach, charakteryzujący się doskonałą redukcją szumów i dużą czułością.	Mikrofon	2023-05-06
+73	Mikrofon Samson Meteor Mic	Samson	399.00	https://i.imgur.com/obqyFmL.png	1	Stylowy i przenośny mikrofon USB, idealny dla osób, które potrzebują nagrywać dźwięk w różnych miejscach. Wyposażony w podstawkę oraz regulację głośności.	Mikrofon	2023-05-06
+74	Głośniki Logitech Z623	Logitech	499.00	https://i.imgur.com/yWOMchw.png	10	Wydajne głośniki komputerowe, zapewniające wysoką jakość dźwięku oraz mocny bas.	Głośniki	2023-05-06
+75	Głośniki Sonos Move	Sonos	1799.00	https://i.imgur.com/gkLkeTD.png	5	Przenośne głośniki bezprzewodowe, zapewniające wysoką jakość dźwięku oraz możliwość odtwarzania muzyki z różnych źródeł.	Głośniki	2023-05-06
+76	Kamera internetowa Logitech C920 HD Pro Webcam	Logitech	399.00	https://i.imgur.com/jONhO6f.png	15	Kamera internetowa z nagrywaniem w jakości Full HD 1080p, wyposażona w dwie wbudowane mikrofony oraz automatyczną korekcję światła. Idealna do wideokonferencji, nagrywania wideo lub streamingu.	Kamera	2023-05-06
+68	Słuchawki Bose QuietComfort 35 II	Bose	1299.00	https://i.imgur.com/0lJJ474.png	5	Wysokiej jakości słuchawki bezprzewodowe, zapewniające doskonały dźwięk oraz aktywną redukcję hałasu. Ze słuchawek Bose korzysta zespół Mercedes w Formule 1.	Słuchawki	2023-05-06
+55	Mysz SteelSeries Rival 600	SteelSeries	299.00	https://i.imgur.com/hdkozEk.png	8	Myszka gamingowa z bardzo precyzyjnym sensorem optycznym i podświetleniem RGB, wyposażona w system regulacji ciężaru oraz programowalne przyciski.	Mysz	2023-05-06
+77	Kamera internetowa Microsoft LifeCam HD-3000	Microsoft	159.00	https://i.imgur.com/5KC2ahj.png	20	Kamera internetowa z nagrywaniem w jakości HD 720p, wyposażona w wbudowany mikrofon, automatyczną korekcję światła oraz funkcję zoomu. Może być używana na biurku lub przymocowana do monitora.	Kamera	2023-05-06
+78	Kamera internetowa Razer Kiyo Streaming Webcam	Razer	799.00	https://i.imgur.com/hJgFVuN.png	8	Kamera internetowa z nagrywaniem w jakości Full HD 1080p, wyposażona w pierścień oświetleniowy LED, który zapewnia równomierny i jasny obraz. Idealna do streamingu i nagrywania wideo.	Kamera	2023-05-06
+79	Logitech StreamCam	Logitech	749.00	https://i.imgur.com/gYK2Xx5.png	12	Wysokiej jakości kamera internetowa dla streamerów, zapewniająca doskonałą jakość obrazu oraz funkcję automatycznego kadrowania. Wyposażona w dwie kapsuły mikrofonowe, które zapewniają doskonałą jakość dźwięku oraz wyróżniają się funkcjonalnym, kompaktowym designem. Idealna dla vlogerów, streamerów i twórców treści.	Kamera	2023-05-06
+80	Router ASUS RT-AC88U	ASUS	1499.00	https://i.imgur.com/NYJz281.jpg	8	Wydajny router z obsługą technologii Wi-Fi 5, 8 antenami i prędkością do 3100 Mbps. Wyposażony w 4 porty LAN i 1 port WAN. Posiada również funkcje sieci wirtualnych i sieci gości.	Router	2023-05-06
+81	Router NETGEAR Nighthawk AX8	NETGEAR	2499.00	https://i.imgur.com/3SXfOE1.png	7	Wydajny router z obsługą technologii Wi-Fi 6, 8 antenami i prędkością do 6000 Mbps. Wyposażony w 4 porty LAN i 1 port WAN. Posiada również funkcje QoS, sieci wirtualnych i sieci gości.	Router	2023-05-06
+82	Router TP-Link Archer C9	TP-Link	899.00	https://i.imgur.com/fsUtUEK.png	8	Wydajny router z obsługą technologii Wi-Fi 5, 3 antenami i prędkością do 1900 Mbps. Wyposażony w 4 porty LAN i 1 port WAN. Posiada również funkcje QoS, sieci wirtualnych i sieci gości.	Router	2023-05-06
+83	Ekran projekcyjny Elite Screens Sable Frame	Elite Screens	2599.00	https://i.imgur.com/GTmgbRm.png	6	Ekran projekcyjny o wysokiej jakości obrazu, zapewniający doskonały kontrast i wyrazistość kolorów.	Inne	2023-05-06
+84	System operacyjny Windows 10 Pro	Microsoft	699.00	https://i.imgur.com/SpZfDyC.png	100	System operacyjny od Microsoftu, zapewniający wysoką wydajność i bezpieczeństwo pracy.	Inne	2023-05-06
+1	Logitech TKL SE	Logitech	249.00	https://i.imgur.com/WsqzwXQ.png	2	Klawiatura mechaniczna Logitech \n\t\tzapewnia szybką i precyzyjną reakcję, dzięki czemu jest idealna do grania i pracy. \n\t\tPosiada podświetlenie RGB, programowalne klawisze i wygodną podpórkę pod nadgarstek.	Klawiatura	2023-05-05
+66	Słuchawki Sony WF-1000XM4	Sony	1299.00	https://i.imgur.com/7dX8xzw.png	3	Bezprzewodowe słuchawki douszne z funkcją redukcji hałasu, zapewniające doskonały dźwięk oraz wygodę użytkowania. Posiadają wiele dodatkowych funkcji.	Słuchawki	2023-05-06
+85	Microsoft Office 365	Microsoft	499.00	https://i.imgur.com/YPAIxI4.png	99	Zestaw narzędzi biurowych, w skład którego wchodzą m.in. programy do tworzenia i edycji dokumentów tekstowych, arkuszy kalkulacyjnych i prezentacji.	Inne	2023-05-06
+64	Słuchawki Apple AirPods Pro	Apple	899.00	https://i.imgur.com/pRavGa9.png	6	Stylowe i funkcjonalne słuchawki bezprzewodowe, posiadające funkcję redukcji hałasu oraz wiele dodatkowych funkcji.	Słuchawki	2023-05-06
+10	Laptop Dell XPS 15	Dell	12799.00	https://i.imgur.com/gJsONBT.png	3	Elegancki i wydajny laptop z ekranem o przekątnej 15,6 cala, wyposażony w procesor Intel Core i7-11800H, kartę graficzną NVIDIA GeForce RTX 3050 Ti, 16 GB pamięci RAM i dysk SSD o pojemności 512 GB.	Laptop	2023-05-06
+21	Karta graficzna AMD Radeon RX 6800 XT	AMD	3899.00	https://i.imgur.com/TiwGe4D.png	3	Wydajna karta graficzna dla graczy i profesjonalistów, wyposażona w zaawansowane technologie graficzne.	Karta graficzna	2023-05-06
+22	Karta graficzna Nvidia GeForce GTX 1660 Super	Nvidia	1399.00	https://i.imgur.com/fPK47ow.png	7	Karta graficzna dla średniozaawansowanych graczy, zapewniająca wydajność na dobrym poziomie w rozsądnej cenie.	Karta graficzna	2023-05-06
+\.
+
+
+--
+-- TOC entry 4875 (class 0 OID 219646)
+-- Dependencies: 257
+-- Data for Name: zamowienia; Type: TABLE DATA; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+COPY psm_computer_store.zamowienia (id_zamowienia, id_klienta, kwota, data_zlozenia_zamowienia, data_wyslania_zamowienia, status_zamowienia) FROM stdin;
+uid6dt14:44:39.569989	6	31994.97	2023-05-19	\N	wysłane
+uid6dt15:10:13.653241	6	31994.97	2023-05-19	\N	wysłane
+uid6dt15:32:06.052209	6	2997.89	2023-05-19	\N	wysłane
+uid6dt22:03:37.865854	6	37793.00	2023-05-19	\N	kompletowanie
+uid6dt15:47:40.545237	6	11395.00	2023-05-19	\N	wysłane
+uid6dt20:10:45.617497	6	5178.99	2023-05-19	\N	kompletowanie
+uid13dt23:35:35.137436	13	7571.89	2023-05-19	\N	wysłane
+\.
+
+
+--
+-- TOC entry 4877 (class 0 OID 219765)
+-- Dependencies: 259
+-- Data for Name: zamowione_produkty; Type: TABLE DATA; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+COPY psm_computer_store.zamowione_produkty (id_zamowionego_produktu, id_zamowienia, id_produktu, ilosc) FROM stdin;
+1	uid6dt14:44:39.569989	5	2
+2	uid6dt14:44:39.569989	14	2
+3	uid6dt14:44:39.569989	63	3
+4	uid6dt14:44:39.569989	5	1
+5	uid6dt15:10:13.653241	5	2
+6	uid6dt15:10:13.653241	14	2
+7	uid6dt15:10:13.653241	63	3
+8	uid6dt15:10:13.653241	5	1
+9	uid6dt15:32:06.052209	6	1
+10	uid6dt15:32:06.052209	66	2
+11	uid6dt15:47:40.545237	8	1
+12	uid6dt15:47:40.545237	55	1
+13	uid6dt15:47:40.545237	85	1
+14	uid6dt15:47:40.545237	64	2
+15	uid6dt22:03:37.865854	2	1
+16	uid6dt22:03:37.865854	10	2
+17	uid6dt22:03:37.865854	21	2
+18	uid6dt22:03:37.865854	68	2
+19	uid6dt20:10:45.617497	15	1
+20	uid6dt20:10:45.617497	5	1
+21	uid13dt23:35:35.137436	6	1
+22	uid13dt23:35:35.137436	18	2
+23	uid13dt23:35:35.137436	22	3
+24	uid13dt23:35:35.137436	55	3
+\.
+
+
+--
+-- TOC entry 4896 (class 0 OID 0)
+-- Dependencies: 246
+-- Name: adresy_id_adresu_seq; Type: SEQUENCE SET; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+SELECT pg_catalog.setval('psm_computer_store.adresy_id_adresu_seq', 15, true);
+
+
+--
+-- TOC entry 4897 (class 0 OID 0)
+-- Dependencies: 252
+-- Name: lista_zakupow_id_produktu_w_koszyku_seq; Type: SEQUENCE SET; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+SELECT pg_catalog.setval('psm_computer_store.lista_zakupow_id_produktu_w_koszyku_seq', 43, true);
+
+
+--
+-- TOC entry 4898 (class 0 OID 0)
+-- Dependencies: 248
+-- Name: osoby_id_osoby_seq; Type: SEQUENCE SET; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+SELECT pg_catalog.setval('psm_computer_store.osoby_id_osoby_seq', 13, true);
+
+
+--
+-- TOC entry 4899 (class 0 OID 0)
+-- Dependencies: 250
+-- Name: produkty_id_produktu_seq; Type: SEQUENCE SET; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+SELECT pg_catalog.setval('psm_computer_store.produkty_id_produktu_seq', 88, true);
+
+
+--
+-- TOC entry 4900 (class 0 OID 0)
+-- Dependencies: 256
+-- Name: zamowienia_id_zamowienia_seq; Type: SEQUENCE SET; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+SELECT pg_catalog.setval('psm_computer_store.zamowienia_id_zamowienia_seq', 1, false);
+
+
+--
+-- TOC entry 4901 (class 0 OID 0)
+-- Dependencies: 258
+-- Name: zamowione_produkty_id_zamowionego_produktu_seq; Type: SEQUENCE SET; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+SELECT pg_catalog.setval('psm_computer_store.zamowione_produkty_id_zamowionego_produktu_seq', 24, true);
+
+
+--
+-- TOC entry 4712 (class 2606 OID 217045)
+-- Name: adresy adresy_pkey; Type: CONSTRAINT; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+ALTER TABLE ONLY psm_computer_store.adresy
+    ADD CONSTRAINT adresy_pkey PRIMARY KEY (id_adresu);
+
+
+--
+-- TOC entry 4718 (class 2606 OID 218100)
+-- Name: lista_zakupow lista_zakupow_pkey; Type: CONSTRAINT; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+ALTER TABLE ONLY psm_computer_store.lista_zakupow
+    ADD CONSTRAINT lista_zakupow_pkey PRIMARY KEY (id_produktu_w_koszyku);
+
+
+--
+-- TOC entry 4714 (class 2606 OID 217052)
+-- Name: osoby osoby_pkey; Type: CONSTRAINT; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+ALTER TABLE ONLY psm_computer_store.osoby
+    ADD CONSTRAINT osoby_pkey PRIMARY KEY (id_osoby);
+
+
+--
+-- TOC entry 4716 (class 2606 OID 217994)
+-- Name: produkty produkty_pkey; Type: CONSTRAINT; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+ALTER TABLE ONLY psm_computer_store.produkty
+    ADD CONSTRAINT produkty_pkey PRIMARY KEY (id_produktu);
+
+
+--
+-- TOC entry 4720 (class 2606 OID 219776)
+-- Name: zamowienia zamowienia_pkey; Type: CONSTRAINT; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+ALTER TABLE ONLY psm_computer_store.zamowienia
+    ADD CONSTRAINT zamowienia_pkey PRIMARY KEY (id_zamowienia);
+
+
+--
+-- TOC entry 4722 (class 2606 OID 219772)
+-- Name: zamowione_produkty zamowione_produkty_pkey; Type: CONSTRAINT; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+ALTER TABLE ONLY psm_computer_store.zamowione_produkty
+    ADD CONSTRAINT zamowione_produkty_pkey PRIMARY KEY (id_zamowionego_produktu);
+
+
+--
+-- TOC entry 4723 (class 2606 OID 217053)
+-- Name: osoby osoby_id_adresu_fkey; Type: FK CONSTRAINT; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+ALTER TABLE ONLY psm_computer_store.osoby
+    ADD CONSTRAINT osoby_id_adresu_fkey FOREIGN KEY (id_adresu) REFERENCES psm_computer_store.adresy(id_adresu);
+
+
+--
+-- TOC entry 4883 (class 0 OID 0)
+-- Dependencies: 19
+-- Name: SCHEMA psm_computer_store; Type: ACL; Schema: -; Owner: 2023_polak_michal
+--
+
+GRANT ALL ON SCHEMA psm_computer_store TO "2023_barwacz_radoslaw";
+
+
+--
+-- TOC entry 4884 (class 0 OID 0)
+-- Dependencies: 247
+-- Name: TABLE adresy; Type: ACL; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+GRANT ALL ON TABLE psm_computer_store.adresy TO "2023_barwacz_radoslaw";
+
+
+--
+-- TOC entry 4886 (class 0 OID 0)
+-- Dependencies: 246
+-- Name: SEQUENCE adresy_id_adresu_seq; Type: ACL; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+GRANT ALL ON SEQUENCE psm_computer_store.adresy_id_adresu_seq TO "2023_barwacz_radoslaw";
+
+
+--
+-- TOC entry 4888 (class 0 OID 0)
+-- Dependencies: 249
+-- Name: TABLE osoby; Type: ACL; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+GRANT ALL ON TABLE psm_computer_store.osoby TO "2023_barwacz_radoslaw";
+
+
+--
+-- TOC entry 4890 (class 0 OID 0)
+-- Dependencies: 248
+-- Name: SEQUENCE osoby_id_osoby_seq; Type: ACL; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+GRANT ALL ON SEQUENCE psm_computer_store.osoby_id_osoby_seq TO "2023_barwacz_radoslaw";
+
+
+--
+-- TOC entry 4891 (class 0 OID 0)
+-- Dependencies: 251
+-- Name: TABLE produkty; Type: ACL; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+GRANT ALL ON TABLE psm_computer_store.produkty TO "2023_barwacz_radoslaw";
+
+
+--
+-- TOC entry 4893 (class 0 OID 0)
+-- Dependencies: 250
+-- Name: SEQUENCE produkty_id_produktu_seq; Type: ACL; Schema: psm_computer_store; Owner: 2023_polak_michal
+--
+
+GRANT ALL ON SEQUENCE psm_computer_store.produkty_id_produktu_seq TO "2023_barwacz_radoslaw";
+
+
+-- Completed on 2023-05-20 02:17:47
+
+--
+-- PostgreSQL database dump complete
+--
+
